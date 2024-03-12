@@ -1,25 +1,45 @@
 //AddTask.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {Button, Form, Row, Col} from "react-bootstrap";
 
-function AddTask({addTask}){
+function AddTask({ addTask, editTask, editingTask, clearEditing }) {
+    const isEditing = editingTask !== null;
     const [input, setInput] = useState({
-        title: '',
-        description: '',
-        priority: 'Medium',
-        dueDate: '',
+        title: isEditing ? editingTask.title : '',
+        description: isEditing ? editingTask.description : '',
+        priority: isEditing ? editingTask.priority : 'Medium',
+        dueDate: isEditing ? editingTask.dueDate : '',
     });
 
-    function handleInput(e){
-        const {name, value} = e.target;
-        setInput({...input, [name]: value});
+    useEffect(() => {
+        if (isEditing) {
+            setInput({
+                title: editingTask.title,
+                description: editingTask.description,
+                priority: editingTask.priority,
+                dueDate: editingTask.dueDate,
+            });
+        }
+    }, [editingTask, isEditing]);
+
+    function handleInput(e) {
+        const { name, value } = e.target;
+        setInput({ ...input, [name]: value });
     }
 
-    function handleSubmit(e){
+    function handleSubmit(e) {
         e.preventDefault();
-        addTask(input);
-        setInput({title: '',description: '',priority: 'Medium', dueDate: ''});
+        if (isEditing) {
+            editTask({ ...editingTask, ...input });
+        } else {
+            addTask(input);
+        }
+        setInput({ title: '', description: '', priority: 'Medium', dueDate: '' });
+        if (isEditing) {
+            clearEditing();
+        }
     }
+
     return(
         <div>
         <Form onSubmit={handleSubmit}>
@@ -45,7 +65,7 @@ function AddTask({addTask}){
                         <option>Low</option>
                     </Form.Control>
                 </Form.Group>
-                <Button variant="primary" type="submit">Add Task</Button>
+                <Button variant="primary" type="submit">{isEditing ? 'Update Task' : 'Add Task'}</Button>
         </Form>
         </div>
     )
