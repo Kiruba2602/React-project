@@ -3,40 +3,30 @@ import { useState, useEffect } from 'react';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import './App.css';
 import Header from './Components/Header';
-import TodoList from './Components/Todolist';
+import TodoList from './Components/TodoList';
 import AddTask from './Components/AddTask';
-import CalendarComponent from './Components/Calendar';
+import CalendarComponent from './Components/CalendarComponent';
 
 function App() {
   const [todolist, setTodolist] = useState([]);
   const [edittask, setEdittask] = useState(null);
   const [filter, setFilter] = useState('all');
 
-  useEffect(() => {
-    setTodolist(todolist.map(task => ({
-      ...task,
-      start: new Date(task.dueDate),
-      end: new Date(task.dueDate)
-    })));
-  }, []);
-
-  function handleToggle(id){
-    let mapped = todolist.map((todo,i)=>{
-      return i === id ? {...todo, complete: !todo.complete} : todo;
-    })
+  function handleToggle(id) {
+    let mapped = todolist.map(task => task.id === id ? { ...task, completed: !task.completed } : task);
     setTodolist(mapped);
   }
 
-  function clearEditing(){
+  function clearEditing() {
     setEdittask(null);
   }
 
-  function deleteTask(id){
-    let filtered = todolist.filter((task, index)=>task.id !== id);
+  function deleteTask(id) {
+    let filtered = todolist.filter(task => task.id !== id);
     setTodolist(filtered);
   }
 
-  function addTask(input){
+  function addTask(input) {
     const newTask = {
       id: todolist.length + 1,
       title: input.title,
@@ -48,14 +38,16 @@ function App() {
     setTodolist([...todolist, newTask]);
   }
 
-  function getFilteredtask(){
-    if(filter === 'all')
-      return todolist;
-    if(filter === 'completed')
-      return todolist.filter(task => task.completed);
-    if(filter === 'incomplete')
-      return todolist.filter(task => !task.completed);
-    
+  function editTask(updatedTask) {
+    const updatedTasks = todolist.map(task => task.id === updatedTask.id ? updatedTask : task);
+    setTodolist(updatedTasks);
+    clearEditing();
+  }
+
+  function getFilteredTasks() {
+    if (filter === 'all') return todolist;
+    if (filter === 'completed') return todolist.filter(task => task.completed);
+    if (filter === 'incomplete') return todolist.filter(task => !task.completed);
     return todolist.filter(task => task.priority === filter);
   }
 
@@ -66,10 +58,10 @@ function App() {
           <Form.Select aria-label="Filter-tasks" onChange={e => setFilter(e.target.value)}>
             <option value="all">All</option>
             <option value="completed">Completed</option>
+            <option value="incomplete">Incomplete</option>
             <option value="High">High</option>
             <option value="Medium">Medium</option>
             <option value="Low">Low</option>
-            <option value="incomplete">Incomplete</option>
           </Form.Select>
         </Col>
       </Row>
@@ -81,17 +73,17 @@ function App() {
       <Row className='my-4'>
         <Col>
           <h2>{edittask ? "Edit Task" : "Add New Task"}</h2>
-          <AddTask addTask={addTask} editTask={edittask} clearEditing={clearEditing}/>
+          <AddTask addTask={addTask} editTask={editTask} editingTask={edittask} clearEditing={clearEditing}/>
         </Col>
       </Row>
       <Row>
         <Col md={6}>
           <h2>Tasks</h2>
-        <TodoList todo={getFilteredtask()} handletoggle={handleToggle} deleteTask={deleteTask} setEdittask={setEdittask}/>
+          <TodoList todo={getFilteredTasks()} handleToggle={handleToggle} deleteTask={deleteTask} setEdittask={setEdittask}/>
         </Col>
         <Col>
-          <h2>Calender</h2>
-          <CalendarComponent todolist={getFilteredtask()}/>
+          <h2>Calendar</h2>
+          <CalendarComponent todolist={getFilteredTasks()}/>
         </Col>
       </Row>
     </Container>
