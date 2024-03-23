@@ -1,11 +1,11 @@
 //App.js
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import './App.css';
 import Header from './Components/Header';
-import TodoList from './Components/TodoList';
+import Todolist from './Components/Todolist';
 import AddTask from './Components/AddTask';
-import CalendarComponent from './Components/CalendarComponent';
+import CalendarComponent from './Components/Calendar';
 
 function App() {
   const [todolist, setTodolist] = useState([]);
@@ -13,7 +13,7 @@ function App() {
   const [filter, setFilter] = useState('all');
 
   function handleToggle(id) {
-    let mapped = todolist.map(task => task.id === id ? { ...task, completed: !task.completed } : task);
+    let mapped = todolist.map(task => task.id === id ? { ...task, completed: !task.completed } : {...task});
     setTodolist(mapped);
   }
 
@@ -51,20 +51,12 @@ function App() {
     return todolist.filter(task => task.priority === filter);
   }
 
+  function updateFilter(newFiltervalue){
+    setFilter(newFiltervalue);
+  }
+
   return (
     <Container fluid="md">
-      <Row>
-        <Col>
-          <Form.Select aria-label="Filter-tasks" onChange={e => setFilter(e.target.value)}>
-            <option value="all">All</option>
-            <option value="completed">Completed</option>
-            <option value="incomplete">Incomplete</option>
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
-          </Form.Select>
-        </Col>
-      </Row>
       <Row>
         <Col>
           <Header />
@@ -77,11 +69,21 @@ function App() {
         </Col>
       </Row>
       <Row>
-        <Col md={6}>
+        <Col md={4}>
           <h2>Tasks</h2>
-          <TodoList todo={getFilteredTasks()} handleToggle={handleToggle} deleteTask={deleteTask} setEdittask={setEdittask}/>
+          <Todolist todo={getFilteredTasks()} handleToggle={handleToggle} deleteTask={deleteTask} setEdittask={setEdittask}/>
         </Col>
-        <Col>
+        <Col md={2}>
+          <Form.Select aria-label="Filter-tasks" onChange={(e) => updateFilter(e.target.value)}>
+            <option value="all">All</option>
+            <option value="completed">Completed</option>
+            <option value="incomplete">Incomplete</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </Form.Select>
+        </Col>
+        <Col md={6}>
           <h2>Calendar</h2>
           <CalendarComponent todolist={getFilteredTasks()}/>
         </Col>

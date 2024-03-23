@@ -11,12 +11,12 @@ function AddTask({ addTask, editTask, editingTask, clearEditing }) {
   });
 
   useEffect(() => {
-    if (isEditing) {
+    if (editingTask) {
       setInput(editingTask);
     } else {
       setInput({ title: '', description: '', priority: 'Medium', dueDate: '' });
     }
-  }, [editingTask, isEditing]);
+  }, [editingTask]);
 
   function handleInput(e) {
     const { name, value } = e.target;
@@ -25,17 +25,18 @@ function AddTask({ addTask, editTask, editingTask, clearEditing }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (isEditing) {
+    if (editingTask) {
       editTask({ ...input, id: editingTask.id });
     } else {
       addTask(input);
     }
+    setInput({ title: '', description: '', priority: 'Medium', dueDate: '' });
     clearEditing();
   }
 
   return (
     <div>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} >
         <Row className="mb-3">
           <Form.Group as={Col}>
             <Form.Label>Title</Form.Label>
@@ -52,13 +53,13 @@ function AddTask({ addTask, editTask, editingTask, clearEditing }) {
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Priority</Form.Label>
-          <Form.Control as="select" name="priority" value={input.priority} onChange={handleInput}>
+          <Form.Control as="select" name="priority" value={input.priority} onChange={handleInput} >
             <option>High</option>
             <option>Medium</option>
             <option>Low</option>
           </Form.Control>
         </Form.Group>
-        <Button variant="primary" type="submit">{isEditing ? 'Update Task' : 'Add Task'}</Button>
+        <Button variant="primary" type="submit">{editingTask ? 'Update Task' : 'Add Task'}</Button>
       </Form>
     </div>
   );

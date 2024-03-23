@@ -35,11 +35,10 @@ function CalendarComponent({todolist}){
         }
         };
     };
-  
-  // Then add eventPropGetter={eventStyleGetter} to your Calendar component props
+
     return(
         <div style={{height: 500}}>
-            <Calendar localizer={localizer} events={events} eventPropGetter={eventStyleGetter} startAccessor="start" endAccessor="end" style={{height: 500}} />
+            <Calendar localizer={localizer} events={events} eventPropGetter={eventStyleGetter} selectable={true} startAccessor="start" endAccessor="end" style={{height: 500}} />
         </div>
     )
 }
