@@ -13,9 +13,8 @@ function CalendarComponent({todolist}){
         allday: true,
     }));
 
-    // Add this within your CalendarComponent function before the return statement
     const eventStyleGetter = (event) => {
-        let backgroundColor = '#3174ad'; // Default color
+        let backgroundColor = '#3174ad';
         switch (event.priority) {
         case 'High':
             backgroundColor = 'red';
