@@ -4,9 +4,9 @@ import { Container, Navbar } from 'react-bootstrap';
 
 function Header(){
   return (
-    <Navbar bg="secondary-subtle" variant="dark">
+    <Navbar bg="none" variant="dark">
       <Container className='d-flex justify-content-center'>
-        <Navbar.Brand class="fs-1">To Do List</Navbar.Brand>
+        <Navbar.Brand class="h1">To Do List</Navbar.Brand>
       </Container>
     </Navbar>
   )

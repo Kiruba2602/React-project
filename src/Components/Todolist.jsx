@@ -9,7 +9,7 @@ const TodoList = ({ todo, handleToggle, deleteTask, setEdittask }) => {
   return (
     <ListGroup>
       {todo.map((task) => (
-        <ListGroup.Item key={task.id} className={`d-flex justify-content-between align-items-center ${task.completed ? "completed todo-list-item" : "todo-list-item"}`}>
+        <ListGroup.Item key={task.id} className={`d-flex justify-content-between align-items-center ${task.completed ? "completed todo-list-item" : "todo-list-item"}` }>
           <div className="ms-2 me-auto">
             <div className={`fw-bold ${task.completed ? "text-decoration-line-through" : ""}`}>{task.title}</div>
             {task.description}
