@@ -1,0 +1,35 @@
+/*App.css*/
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body{
+  background: url("../public/wallpaper.jpg");
+  background-size: cover;
+  background-repeat: repeat;
+}
+.App {
+  text-align: center;
+}
+
+/* Todolist.module.css */
+.completed {
+  background-color: #b2b2b2;
+}
+
+.todo-list-item {
+  transition: background-color 0.3s;
+}
+
+.todo-list-item:hover {
+  background-color: #f5f5f5;
+}
+
+/* CalendarComponent.module.css */
+.rbc-header {
+  background-color: #333;
+  color: #fff;
+}
+
+.rbc-header .rbc-header-content {
+  padding: 10px;
+}
