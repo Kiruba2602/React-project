@@ -6,7 +6,7 @@ function Header(){
   return (
     <Navbar bg="none" variant="dark">
       <Container className='d-flex justify-content-center'>
-        <Navbar.Brand class="h1">To Do List</Navbar.Brand>
+        <Navbar.Brand className='fs-1 text-light'>To Do List</Navbar.Brand>
       </Container>
     </Navbar>
   )
