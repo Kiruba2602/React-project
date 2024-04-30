@@ -64,13 +64,13 @@ function App() {
       </Row>
       <Row className='my-4'>
         <Col>
-          <h2 className='text-light'>{edittask ? "Edit Task" : "Add New Task"}</h2>
+          <h2 className='text-dark'>{edittask ? "Edit Task" : "Add New Task"}</h2>
           <AddTask addTask={addTask} editTask={editTask} editingTask={edittask} clearEditing={clearEditing}/>
         </Col>
       </Row>
       <Row>
         <Col md={4}>
-          <h2 className='text-light'>Tasks</h2>
+          <h2 className='text-dark'>Tasks</h2>
           <Todolist todo={getFilteredTasks()} handleToggle={handleToggle} deleteTask={deleteTask} setEdittask={setEdittask}/>
         </Col>
         <Col md={2}>
@@ -84,7 +84,7 @@ function App() {
           </Form.Select>
         </Col>
         <Col md={6}>
-          <h2 className='text-light'>Calendar</h2>
+          <h2 className='text-dark'>Calendar</h2>
           <CalendarComponent todolist={getFilteredTasks()}/>
         </Col>
       </Row>
